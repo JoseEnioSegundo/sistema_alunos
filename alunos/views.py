@@ -7,9 +7,25 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Aluno
 from .forms import AlunoForm
 from django.contrib import messages
+from django.core.paginator import Paginator
+from django.db.models import Q
 
 def lista_alunos(request):
-    alunos = Aluno.objects.all()
+    buscar = request.GET.get('buscar')
+
+    if buscar:
+        alunos_lista = Aluno.objects.filter(
+            Q(nome__icontains=buscar) |
+            Q(curso__icontains=buscar)|
+            Q(matricula__icontains=buscar)
+        )
+    else:
+        alunos_lista = Aluno.objects.all()
+
+    paginator = Paginator(alunos_lista, 5)
+    page_number = request.GET.get('page')
+    alunos = paginator.get_page(page_number)
+
     return render(request, 'alunos/lista_alunos.html', {'alunos': alunos})
 
 
