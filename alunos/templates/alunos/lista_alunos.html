@@ -7,6 +7,25 @@
 <a href="{% url 'cadastrar_aluno' %}" class="btn btn-primary mb-3">
     Cadastrar Novo Aluno
 </a>
+<form method="GET" class="row mb-3">
+    <div class="col-md-6">
+        <input type="text" name="buscar" class="form-control"
+               placeholder="Buscar aluno pelo nome"
+               value="{{ request.GET.buscar }}">
+    </div>
+
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary">
+            Buscar
+        </button>
+    </div>
+
+    <div class="col-md-2">
+        <a href="{% url 'lista_alunos' %}" class="btn btn-secondary">
+            Limpar
+        </a>
+    </div>
+</form>
 
 <table class="table table-striped table-bordered">
     <thead class="table-dark">
@@ -39,5 +58,34 @@
         {% endfor %}
     </tbody>
 </table>
+<nav>
+    <ul class="pagination">
+
+        {% if alunos.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ alunos.previous_page_number }}{% if request.GET.buscar %}&buscar={{ request.GET.buscar }}{% endif %}">
+                    Anterior
+                </a>
+            </li>
+        {% endif %}
+
+        {% for num in alunos.paginator.page_range %}
+            <li class="page-item {% if alunos.number == num %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}{% if request.GET.buscar %}&buscar={{ request.GET.buscar }}{% endif %}">
+                    {{ num }}
+                </a>
+            </li>
+        {% endfor %}
+
+        {% if alunos.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ alunos.next_page_number }}{% if request.GET.buscar %}&buscar={{ request.GET.buscar }}{% endif %}">
+                    Próximo
+                </a>
+            </li>
+        {% endif %}
+
+    </ul>
+</nav>
 
 {% endblock %}
