@@ -7,7 +7,20 @@
 <form method="POST" class="card p-4 shadow">
     {% csrf_token %}
     
-    {{ form.as_p }}
+    <div class="mb-3">
+        <label class="form-label">Nome</label>
+        {{ form.nome }}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Curso</label>
+        {{ form.curso }}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Data de Nascimento</label>
+        {{ form.data_nascimento }}
+    </div>
 
     <button type="submit" class="btn btn-success">
         Salvar

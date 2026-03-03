@@ -3,4 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.lista_alunos, name='lista_alunos'),
+    path('cadastrar/', views.cadastrar_aluno, name='cadastrar_aluno'),
+    path('excluir/<int:id>/', views.excluir_aluno, name='excluir_aluno'),
+    path('editar/<int:id>/', views.editar_aluno, name='editar_aluno'),
 ]
