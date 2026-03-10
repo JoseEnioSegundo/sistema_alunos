@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Sistema de Gerenciamento de Alunos | Student Management System
 
 ---
