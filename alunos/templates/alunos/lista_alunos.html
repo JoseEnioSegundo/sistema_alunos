@@ -49,6 +49,10 @@
                 <a href="{% url 'excluir_aluno' aluno.id %}" class="btn btn-danger btn-sm">
                     Excluir
                 </a>
+                <a href="{% url 'gerenciar_materias' aluno.id %}" 
+                    class="btn btn-info btn-sm">
+        Matérias
+</a>
             </td>
         </tr>
         {% empty %}

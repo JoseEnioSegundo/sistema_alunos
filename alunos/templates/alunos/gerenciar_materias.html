@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Gerenciar Matérias - {{ aluno.nome }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    {% for materia in materias %}
+        <div>
+            <input type="checkbox"
+                   name="materias"
+                   value="{{ materia.id }}"
+                   {% if materia in aluno.materias.all %}checked{% endif %}>
+            {{ materia.nome_materia }}
+        </div>
+    {% endfor %}
+
+    <br>
+
+    <button type="submit" class="btn btn-success">
+        Salvar
+    </button>
+
+</form>
+
+{% endblock %}

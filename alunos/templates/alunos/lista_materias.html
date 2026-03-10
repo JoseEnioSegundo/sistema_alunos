@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">Gerenciar Matérias - {{ aluno.nome }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Selecionar</th>
+                <th>Nome da Matéria</th>
+                <th>Curso</th>
+                <th>Professor</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for materia in materias %}
+            <tr>
+                <td>
+                    <input type="checkbox"
+                           name="materias"
+                           value="{{ materia.id }}"
+                           {% if materia in aluno.materias.all %}checked{% endif %}>
+                </td>
+
+                <td>{{ materia.nome_materia }}</td>
+                <td>{{ materia.curso.nome }}</td>
+                <td>{{ materia.professor }}</td>
+            </tr>
+
+            {% empty %}
+            <tr>
+                <td colspan="4">Nenhuma matéria cadastrada.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-success">
+        Salvar Matérias
+    </button>
+
+</form>
+
+{% endblock %}
