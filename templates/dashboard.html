@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+ni{% extends 'base.html' %}
 
 {% block title %}Dashboard - Sistema de Alunos{% endblock %}
 
@@ -13,8 +13,8 @@
     <div class="row mb-5">
         <!-- Card Total de Alunos -->
         <div class="col-md-3 col-sm-6 mb-3">
-            <div class="stat-card" style="border-left: 4px solid #6366f1;">
-                <i class="fas fa-users" style="font-size: 2.5rem; color: #6366f1; margin-bottom: 1rem;"></i>
+            <div class="stat-card" style="border-left: 4px solid #1e40af;">
+                <i class="fas fa-users" style="font-size: 2.5rem; color: #1e40af; margin-bottom: 1rem;"></i>
                 <h3>{{ total_alunos }}</h3>
                 <p>Total de Alunos</p>
             </div>
@@ -22,8 +22,8 @@
 
         <!-- Card Total de Matérias -->
         <div class="col-md-3 col-sm-6 mb-3">
-            <div class="stat-card" style="border-left: 4px solid #8b5cf6;">
-                <i class="fas fa-book" style="font-size: 2.5rem; color: #8b5cf6; margin-bottom: 1rem;"></i>
+            <div class="stat-card" style="border-left: 4px solid #7c3aed;">
+                <i class="fas fa-book" style="font-size: 2.5rem; color: #7c3aed; margin-bottom: 1rem;"></i>
                 <h3>{{ total_materias }}</h3>
                 <p>Total de Matérias</p>
             </div>
@@ -31,8 +31,8 @@
 
         <!-- Card Total de Cursos -->
         <div class="col-md-3 col-sm-6 mb-3">
-            <div class="stat-card" style="border-left: 4px solid #10b981;">
-                <i class="fas fa-graduation-cap" style="font-size: 2.5rem; color: #10b981; margin-bottom: 1rem;"></i>
+            <div class="stat-card" style="border-left: 4px solid #059669;">
+                <i class="fas fa-graduation-cap" style="font-size: 2.5rem; color: #059669; margin-bottom: 1rem;"></i>
                 <h3>{{ total_cursos }}</h3>
                 <p>Total de Cursos</p>
             </div>
@@ -40,8 +40,8 @@
 
         <!-- Card Total de Notas -->
         <div class="col-md-3 col-sm-6 mb-3">
-            <div class="stat-card" style="border-left: 4px solid #f59e0b;">
-                <i class="fas fa-star" style="font-size: 2.5rem; color: #f59e0b; margin-bottom: 1rem;"></i>
+            <div class="stat-card" style="border-left: 4px solid #d97706;">
+                <i class="fas fa-star" style="font-size: 2.5rem; color: #d97706; margin-bottom: 1rem;"></i>
                 <h3>{{ total_notas }}</h3>
                 <p>Total de Notas</p>
             </div>
@@ -76,7 +76,7 @@
                                         </td>
                                         <td>{{ nota.materia.nome_materia }}</td>
                                         <td>
-                                            <span class="badge" style="background-color: {% if nota.valor >= 7 %}#10b981{% elif nota.valor >= 5 %}#f59e0b{% else %}#ef4444{% endif %};">
+                                            <span class="badge" style="background-color: {% if nota.valor >= 7 %}#059669{% elif nota.valor >= 5 %}#d97706{% else %}#b91c1c{% endif %};">
                                                 {{ nota.valor }}
                                             </span>
                                         </td>
@@ -114,7 +114,7 @@
                             <div class="list-group-item d-flex justify-content-between align-items-center">
                                 <div>
                                     <h6 class="mb-0">
-                                        <i class="fas fa-medal" style="color: #f59e0b;"></i> {{ aluno.nome }}
+                                        <i class="fas fa-medal" style="color: #d97706;"></i> {{ aluno.nome }}
                                     </h6>
                                     <small class="text-muted">{{ aluno.curso.nome }}</small>
                                 </div>
