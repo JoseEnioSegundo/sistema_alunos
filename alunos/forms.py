@@ -1,5 +1,5 @@
 from django import forms
-from .models import Aluno
+from .models import Aluno, Curso
 
 class AlunoForm(forms.ModelForm):
     class Meta:
@@ -9,7 +9,7 @@ class AlunoForm(forms.ModelForm):
             'nome': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'matricula': forms.TextInput(attrs={'class': 'form-control'}),
-            'curso': forms.TextInput(attrs={'class': 'form-control'}),
+            'curso': forms.Select(attrs={'class': 'form-control'}),
             'data_nascimento': forms.DateInput(attrs={
                 'class': 'form-control',
                 'type': 'date'

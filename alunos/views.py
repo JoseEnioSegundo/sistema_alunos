@@ -15,9 +15,9 @@ def lista_alunos(request):
             Q(nome__icontains=buscar) |
             Q(curso__nome__icontains=buscar) |
             Q(matricula__icontains=buscar)
-        )
+        ).order_by('-id')
     else:
-        alunos_lista = Aluno.objects.all()
+        alunos_lista = Aluno.objects.all().order_by('-id')
 
     paginator = Paginator(alunos_lista, 5)
     page_number = request.GET.get('page')
@@ -29,10 +29,12 @@ def lista_alunos(request):
 def cadastrar_aluno(request):
     if request.method == 'POST':
         form = AlunoForm(request.POST)
+
         if form.is_valid():
             form.save()
             messages.success(request, 'Aluno cadastrado com sucesso!')
             return redirect('lista_alunos')
+
     else:
         form = AlunoForm()
 
@@ -44,10 +46,12 @@ def editar_aluno(request, id):
 
     if request.method == 'POST':
         form = AlunoForm(request.POST, instance=aluno)
+
         if form.is_valid():
             form.save()
             messages.success(request, 'Aluno editado com sucesso!')
             return redirect('lista_alunos')
+
     else:
         form = AlunoForm(instance=aluno)
 
@@ -73,25 +77,17 @@ def lista_materias(request):
     })
 
 
-def listar_materias(request, aluno_id):
-    aluno = get_object_or_404(Aluno, id=aluno_id)
-
-    materias = aluno.curso.materia_set.all()
-
-    return render(request, 'alunos/listar_materias.html', {
-        'aluno': aluno,
-        'materias': materias
-    })
-
-
 def gerenciar_materias(request, aluno_id):
-
     aluno = get_object_or_404(Aluno, id=aluno_id)
-    materias = Materia.objects.all()  # para testar
+
+    materias = Materia.objects.filter(curso=aluno.curso)
 
     if request.method == "POST":
         materias_ids = request.POST.getlist('materias')
         aluno.materias.set(materias_ids)
+
+        messages.success(request, 'Matérias atualizadas com sucesso!')
+
         return redirect('gerenciar_materias', aluno_id=aluno.id)
 
     return render(request, 'alunos/gerenciar_materias.html', {

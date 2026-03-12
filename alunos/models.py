@@ -8,12 +8,12 @@ class Curso(models.Model):
 
 
 class Materia(models.Model):
-    nome = models.CharField(max_length=100)
-    professor = models.CharField(max_length=100)
+    nome_materia = models.CharField(max_length=100)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
+    professor = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.nome
+        return self.nome_materia
 
 
 class Aluno(models.Model):
