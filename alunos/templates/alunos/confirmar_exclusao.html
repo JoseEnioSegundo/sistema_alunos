@@ -1,42 +1,61 @@
 {% extends 'base.html' %}
 
+{% block title %}Confirmar Desativação - Sistema de Alunos{% endblock %}
+
 {% block content %}
 
-<div class="container mt-5">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-5">
+            <div class="card shadow-lg border-danger">
+                <div class="card-header bg-danger">
+                    <h5 class="mb-0">
+                        <i class="fas fa-exclamation-triangle"></i> Desativar Aluno
+                    </h5>
+                </div>
+                <div class="card-body text-center">
+                    <i class="fas fa-user-slash" style="font-size: 3rem; color: #ef4444; margin: 1.5rem 0;"></i>
+                    
+                    <p class="fs-5 mt-3 mb-3">Tem certeza que deseja desativar este aluno?</p>
+                    
+                    <div class="bg-light p-4 rounded mb-4 text-start">
+                        <p class="mb-2">
+                            <strong>👤 Nome:</strong><br>
+                            {{ aluno.nome }}
+                        </p>
+                        <p class="mb-2">
+                            <strong>🆔 Matrícula:</strong><br>
+                            <span class="badge bg-info">{{ aluno.matricula }}</span>
+                        </p>
+                        <p class="mb-0">
+                            <strong>🎓 Curso:</strong><br>
+                            {{ aluno.curso.nome }}
+                        </p>
+                    </div>
 
-    <div class="card shadow-lg border-0">
+                    <div class="alert alert-warning mb-4">
+                        <small>
+                            <strong>⚠️ Nota:</strong> O aluno será desativado mas seus dados permanecerão no sistema.
+                            Esta ação pode ser revertida posteriormente.
+                        </small>
+                    </div>
 
-        <!-- Cabeçalho -->
-        <div class="card-header bg-danger text-white">
-            <h4 class="mb-0">⚠ Confirmar Exclusão</h4>
+                    <form method="post" class="d-grid gap-2">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-lg">
+                            <i class="fas fa-check"></i> Sim, Desativar
+                        </button>
+                        <a href="{% url 'perfil_aluno' aluno.id %}" class="btn btn-outline-secondary">
+                            Cancelar
+                        </a>
+                        <a href="{% url 'lista_alunos' %}" class="btn btn-outline-secondary btn-sm">
+                            ← Voltar para Alunos
+                        </a>
+                    </form>
+                </div>
+            </div>
         </div>
-
-        <div class="card-body text-center">
-
-            <p class="fs-5">
-                Tem certeza que deseja excluir o aluno:
-            </p>
-
-            <h4 class="text-danger mb-4">
-                {{ aluno.nome }}
-            </h4>
-
-            <form method="post" class="d-flex justify-content-center gap-3">
-                {% csrf_token %}
-
-                <button type="submit" class="btn btn-danger px-4">
-                    🗑 Sim, excluir
-                </button>
-
-                <a href="{% url 'lista_alunos' %}" class="btn btn-secondary px-4">
-                    Cancelar
-                </a>
-            </form>
-
-        </div>
-
     </div>
-
 </div>
 
 {% endblock %}

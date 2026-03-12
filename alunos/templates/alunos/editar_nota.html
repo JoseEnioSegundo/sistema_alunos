@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Nota - Sistema de Alunos{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-lg">
+                <div class="card-header">
+                    <i class="fas fa-edit"></i> Editar Nota
+                </div>
+                <div class="card-body">
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+
+                        <!-- Aluno (readonly) -->
+                        <div class="mb-3">
+                            <label class="form-label">👨‍🎓 Aluno</label>
+                            <input type="text" class="form-control" value="{{ nota.aluno.nome }}" readonly>
+                        </div>
+
+                        <!-- Matéria (readonly) -->
+                        <div class="mb-3">
+                            <label class="form-label">📚 Matéria</label>
+                            <input type="text" class="form-control" value="{{ nota.materia.nome_materia }}" readonly>
+                        </div>
+
+                        <!-- Nota -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">⭐ Nota (0-10)</label>
+                                {{ form.valor }}
+                                {% if form.valor.errors %}
+                                    <div class="alert alert-danger mt-2">{{ form.valor.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Tipo de Avaliação -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">📋 Tipo de Avaliação</label>
+                                {{ form.tipo_avaliacao }}
+                                {% if form.tipo_avaliacao.errors %}
+                                    <div class="alert alert-danger mt-2">{{ form.tipo_avaliacao.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Data de Avaliação (readonly) -->
+                        <div class="mb-3">
+                            <label class="form-label">📅 Data da Avaliação</label>
+                            <input type="text" class="form-control" value="{{ nota.data_avaliacao|date:'d/m/Y' }}" readonly>
+                        </div>
+
+                        <!-- Observação -->
+                        <div class="mb-3">
+                            <label class="form-label">📝 Observações</label>
+                            {{ form.observacao }}
+                            {% if form.observacao.errors %}
+                                <div class="alert alert-danger mt-2">{{ form.observacao.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Botões -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save"></i> Salvar Alterações
+                            </button>
+                            <a href="{% url 'lista_notas' %}" class="btn btn-outline-secondary">
+                                ← Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

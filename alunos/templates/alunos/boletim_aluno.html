@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}Boletim - {{ aluno.nome }} - Sistema de Alunos{% endblock %}
+
+{% block content %}
+
+<div class="mb-5">
+    <!-- Cabeçalho -->
+    <div class="card shadow-lg mb-4">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h4 class="mb-2"><i class="fas fa-certificate"></i> Boletim Acadêmico</h4>
+                    <p class="mb-0 text-white">
+                        <strong>Aluno:</strong> {{ aluno.nome }}<br>
+                        <strong>Matrícula:</strong> {{ aluno.matricula }}<br>
+                        <strong>Curso:</strong> {{ aluno.curso.nome }}
+                    </p>
+                </div>
+                <div class="text-end">
+                    {% if media_geral %}
+                    <div style="font-size: 2.5rem; font-weight: 700;">
+                        {{ media_geral|floatformat:2 }}
+                    </div>
+                    <small>Média Geral</small>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Matérias e Notas -->
+    {% if notas_por_materia %}
+        {% for item in notas_por_materia %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-book"></i> {{ item.materia.nome_materia }}</h5>
+                    <div>
+                        <span class="badge fs-6" style="background-color: {% if item.media >= 7 %}#10b981{% elif item.media >= 5 %}#f59e0b{% else %}#ef4444{% endif %};">
+                            Média: {{ item.media|floatformat:2 }}
+                        </span>
+                        <span class="badge bg-info ms-2">{{ item.status }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm mb-0">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Tipo</th>
+                                <th class="text-center">Nota</th>
+                                <th>Observação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for nota in item.notas %}
+                            <tr>
+                                <td>{{ nota.data_avaliacao|date:"d/m/Y" }}</td>
+                                <td>{{ nota.get_tipo_avaliacao_display }}</td>
+                                <td class="text-center">
+                                    <span class="badge" style="background-color: {% if nota.valor >= 7 %}#10b981{% elif nota.valor >= 5 %}#f59e0b{% else %}#ef4444{% endif %};">
+                                        {{ nota.valor }}
+                                    </span>
+                                </td>
+                                <td>{{ nota.observacao|default:"—" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Professor -->
+                <div class="mt-3 pt-3 border-top">
+                    <small class="text-muted">
+                        <strong>Professor:</strong> {{ item.materia.professor }}
+                    </small>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="card">
+            <div class="card-body text-center p-5">
+                <i class="fas fa-inbox" style="font-size: 3rem; color: #d1d5db; margin-bottom: 1rem;"></i>
+                <p class="text-muted">Nenhuma nota registrada para este aluno.</p>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Botões de Ação -->
+    <div class="mt-4">
+        <a href="{% url 'perfil_aluno' aluno.id %}" class="btn btn-info">
+            <i class="fas fa-user"></i> Ver Perfil
+        </a>
+        <a href="{% url 'gerenciar_materias' aluno.id %}" class="btn btn-primary">
+            <i class="fas fa-book"></i> Gerenciar Matérias
+        </a>
+        <a href="{% url 'lista_alunos' %}" class="btn btn-outline-secondary">
+            ← Voltar
+        </a>
+    </div>
+</div>
+
+{% endblock %}

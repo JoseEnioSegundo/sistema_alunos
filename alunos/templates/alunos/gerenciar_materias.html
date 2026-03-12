@@ -1,101 +1,88 @@
 {% extends 'base.html' %}
 
+{% block title %}Gerenciar Matérias - {{ aluno.nome }} - Sistema de Alunos{% endblock %}
+
 {% block content %}
 
-<div class="container mt-4">
-
-    <div class="card shadow-lg border-0">
-
-        <!-- Cabeçalho -->
-        <div class="card-header bg-gradient bg-primary text-white d-flex justify-content-between align-items-center">
-            <h4 class="mb-0">📚 Gerenciar Matérias</h4>
-        </div>
-
-        <div class="card-body">
-
-            <!-- Informações do aluno -->
-            <div class="mb-4 p-3 bg-light rounded border">
-                <h5 class="mb-1">
-                    👨‍🎓 <strong>{{ aluno.nome }}</strong>
-                </h5>
-
-                <span class="badge bg-primary fs-6">
-                    Curso: {{ aluno.curso }}
-                </span>
+<div class="mb-5">
+    <!-- Cabeçalho -->
+    <div class="card shadow-lg mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="mb-2"><i class="fas fa-book"></i> Gerenciar Matérias</h4>
+                <p class="mb-0 text-white">
+                    <strong>Aluno:</strong> {{ aluno.nome }}<br>
+                    <strong>Curso:</strong> {{ aluno.curso.nome }}
+                </p>
             </div>
-
-            <form method="post">
-                {% csrf_token %}
-
-                <div class="row g-3">
-
-                    {% for materia in materias %}
-
-                    <div class="col-md-4">
-
-                        <div class="card h-100 border-0 shadow-sm materia-card">
-
-                            <div class="card-body">
-
-                                <div class="form-check">
-
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           name="materias"
-                                           value="{{ materia.id }}"
-                                           id="materia{{ materia.id }}"
-                                           {% if materia in aluno.materias.all %}checked{% endif %}>
-
-                                    <label class="form-check-label fw-bold"
-                                           for="materia{{ materia.id }}">
-                                        {{ materia.nome_materia }}
-                                    </label>
-
-                                </div>
-
-                                <p class="text-muted small mt-2 mb-0">
-                                    👨‍🏫 Professor: {{ materia.professor }}
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    {% endfor %}
-
-                </div>
-
-                <div class="mt-4 d-flex gap-2">
-
-                    <button type="submit" class="btn btn-success px-4">
-                        💾 Salvar Matérias
-                    </button>
-
-                    <a href="{% url 'lista_alunos' %}" class="btn btn-outline-secondary">
-                        ← Voltar
-                    </a>
-
-                </div>
-
-            </form>
-
         </div>
-
     </div>
 
+    <!-- Formulário de Matérias -->
+    {% if materias %}
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="row g-3">
+            {% for materia in materias %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-1" style="transition: all 0.2s ease;">
+                    <div class="card-body">
+                        <!-- Checkbox -->
+                        <div class="form-check mb-3">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                name="materias"
+                                value="{{ materia.id }}"
+                                id="materia{{ materia.id }}"
+                                {% if materia in aluno.materias.all %}checked{% endif %}>
+
+                            <label class="form-check-label fw-bold" for="materia{{ materia.id }}">
+                                {{ materia.nome_materia }}
+                            </label>
+                        </div>
+
+                        <!-- Informações da Matéria -->
+                        <div class="small text-muted">
+                            <p class="mb-1">
+                                <i class="fas fa-clock"></i>
+                                <strong>Carga:</strong> {{ materia.carga_horaria }}h
+                            </p>
+                            <p class="mb-0">
+                                <i class="fas fa-user-tie"></i>
+                                <strong>Prof.:</strong> {{ materia.professor }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Botões -->
+        <div class="mt-4 d-grid gap-2">
+            <button type="submit" class="btn btn-success btn-lg">
+                <i class="fas fa-save"></i> Salvar Matérias
+            </button>
+            <a href="{% url 'perfil_aluno' aluno.id %}" class="btn btn-info">
+                <i class="fas fa-user"></i> Ver Perfil
+            </a>
+            <a href="{% url 'lista_alunos' %}" class="btn btn-outline-secondary">
+                ← Voltar
+            </a>
+        </div>
+    </form>
+    {% else %}
+    <div class="alert alert-info">
+        <i class="fas fa-info-circle"></i>
+        Não há matérias disponíveis para o curso <strong>{{ aluno.curso.nome }}</strong>.
+    </div>
+    <a href="{% url 'lista_alunos' %}" class="btn btn-outline-secondary">
+        ← Voltar
+    </a>
+    {% endif %}
 </div>
 
-<style>
-.materia-card{
-    transition: all 0.2s ease;
-}
-
-.materia-card:hover{
-    transform: translateY(-4px);
-    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
-}
-</style>
-
+{% endblock %}
 {% endblock %}

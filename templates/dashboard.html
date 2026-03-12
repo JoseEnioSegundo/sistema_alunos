@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Sistema de Alunos{% endblock %}
+
+{% block content %}
+
+<div class="mb-5">
+    <h1 class="mb-4" style="font-weight: 700; color: #1f2937;">
+        <i class="fas fa-tachometer-alt"></i> Dashboard
+    </h1>
+
+    <!-- ========== ESTATÍSTICAS ==========  -->
+    <div class="row mb-5">
+        <!-- Card Total de Alunos -->
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="stat-card" style="border-left: 4px solid #6366f1;">
+                <i class="fas fa-users" style="font-size: 2.5rem; color: #6366f1; margin-bottom: 1rem;"></i>
+                <h3>{{ total_alunos }}</h3>
+                <p>Total de Alunos</p>
+            </div>
+        </div>
+
+        <!-- Card Total de Matérias -->
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="stat-card" style="border-left: 4px solid #8b5cf6;">
+                <i class="fas fa-book" style="font-size: 2.5rem; color: #8b5cf6; margin-bottom: 1rem;"></i>
+                <h3>{{ total_materias }}</h3>
+                <p>Total de Matérias</p>
+            </div>
+        </div>
+
+        <!-- Card Total de Cursos -->
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="stat-card" style="border-left: 4px solid #10b981;">
+                <i class="fas fa-graduation-cap" style="font-size: 2.5rem; color: #10b981; margin-bottom: 1rem;"></i>
+                <h3>{{ total_cursos }}</h3>
+                <p>Total de Cursos</p>
+            </div>
+        </div>
+
+        <!-- Card Total de Notas -->
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="stat-card" style="border-left: 4px solid #f59e0b;">
+                <i class="fas fa-star" style="font-size: 2.5rem; color: #f59e0b; margin-bottom: 1rem;"></i>
+                <h3>{{ total_notas }}</h3>
+                <p>Total de Notas</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== ÚLTIMAS NOTAS ==========  -->
+    <div class="row">
+        <div class="col-lg-8 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-history"></i> Últimas Notas Lançadas
+                </div>
+                <div class="card-body p-0">
+                    {% if ultimas_notas %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Aluno</th>
+                                        <th>Matéria</th>
+                                        <th>Nota</th>
+                                        <th>Tipo</th>
+                                        <th>Data</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for nota in ultimas_notas %}
+                                    <tr>
+                                        <td>
+                                            <strong>{{ nota.aluno.nome }}</strong>
+                                        </td>
+                                        <td>{{ nota.materia.nome_materia }}</td>
+                                        <td>
+                                            <span class="badge" style="background-color: {% if nota.valor >= 7 %}#10b981{% elif nota.valor >= 5 %}#f59e0b{% else %}#ef4444{% endif %};">
+                                                {{ nota.valor }}
+                                            </span>
+                                        </td>
+                                        <td>{{ nota.get_tipo_avaliacao_display }}</td>
+                                        <td>{{ nota.data_avaliacao|date:"d/m/Y" }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="p-4 text-center text-muted">
+                            <p>Nenhuma nota lançada ainda.</p>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer bg-light">
+                    <a href="{% url 'lista_notas' %}" class="btn btn-sm btn-primary">
+                        <i class="fas fa-arrow-right"></i> Ver Todas as Notas
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== ALUNOS COM MELHOR DESEMPENHO ==========  -->
+        <div class="col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-trophy"></i> Melhores Desempenhos
+                </div>
+                <div class="card-body">
+                    {% if alunos_desempenho %}
+                        <div class="list-group list-group-flush">
+                            {% for aluno in alunos_desempenho %}
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-0">
+                                        <i class="fas fa-medal" style="color: #f59e0b;"></i> {{ aluno.nome }}
+                                    </h6>
+                                    <small class="text-muted">{{ aluno.curso.nome }}</small>
+                                </div>
+                                <span class="badge bg-success">
+                                    {{ aluno.media|floatformat:2 }}
+                                </span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-center text-muted">Sem notas para calcular.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== BOTÕES DE AÇÕES ==========  -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <a href="{% url 'lista_alunos' %}" class="btn btn-primary">
+                <i class="fas fa-users"></i> Gerenciar Alunos
+            </a>
+            <a href="{% url 'lancar_nota' %}" class="btn btn-success">
+                <i class="fas fa-plus"></i> Lançar Nota
+            </a>
+            <a href="{% url 'lista_notas' %}" class="btn btn-info">
+                <i class="fas fa-list"></i> Ver Notas
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

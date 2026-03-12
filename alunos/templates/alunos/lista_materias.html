@@ -1,62 +1,68 @@
 {% extends 'base.html' %}
 
+{% block title %}Matérias - Sistema de Alunos{% endblock %}
+
 {% block content %}
 
-<div class="container mt-4">
+<div class="mb-5">
+    <h2 class="mb-4">
+        <i class="fas fa-book"></i> Catálogo de Matérias
+    </h2>
 
-    <!-- Cabeçalho -->
-    <div class="mb-3">
-        <h2 class="mb-0">📚 Gerenciar Matérias</h2>
-        <p class="text-muted">
-            Aluno: <strong>{{ aluno.nome }}</strong> | Curso: {{ aluno.curso }}
-        </p>
+    {% if materias %}
+        <div class="row">
+            {% for materia in materias %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm" style="transition: all 0.3s ease;">
+                    <div class="card-header" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);">
+                        <h5 class="mb-0 text-white">{{ materia.nome_materia }}</h5>
+                    </div>
+                    
+                    <div class="card-body">
+                        <p class="mb-3">
+                            <strong>Curso:</strong><br>
+                            <span class="badge bg-primary">{{ materia.curso.nome }}</span>
+                        </p>
+                        
+                        <p class="mb-3">
+                            <strong>Professor:</strong><br>
+                            <i class="fas fa-user-tie"></i> {{ materia.professor }}
+                        </p>
+                        
+                        <p class="mb-0">
+                            <strong>Carga Horária:</strong><br>
+                            <i class="fas fa-clock"></i> {{ materia.carga_horaria }} horas
+                        </p>
+                    </div>
+                    
+                    <div class="card-footer bg-light">
+                        {% if materia.ativo %}
+                            <span class="badge bg-success"><i class="fas fa-check"></i> Ativa</span>
+                        {% else %}
+                            <span class="badge bg-danger"><i class="fas fa-times"></i> Inativa</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card">
+            <div class="card-body text-center p-5">
+                <i class="fas fa-inbox" style="font-size: 3rem; color: #d1d5db; margin-bottom: 1rem;"></i>
+                <p class="text-muted">Nenhuma matéria cadastrada.</p>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="mt-4">
+        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary">
+            ← Voltar
+        </a>
     </div>
+</div>
 
-    <form method="post">
-        {% csrf_token %}
-
-        <div class="card shadow">
-
-            <div class="card-body p-0">
-
-                <table class="table table-hover mb-0">
-
-                    <thead class="table-dark">
-                        <tr>
-                            <th class="text-center">Selecionar</th>
-                            <th>Matéria</th>
-                            <th>Curso</th>
-                            <th>Professor</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        {% for materia in materias %}
-
-                        <tr>
-
-                            <td class="text-center align-middle">
-                                <input type="checkbox"
-                                       class="form-check-input"
-                                       name="materias"
-                                       value="{{ materia.id }}"
-                                       {% if materia in aluno.materias.all %}checked{% endif %}>
-                            </td>
-
-                            <td class="align-middle">
-                                <strong>{{ materia.nome_materia }}</strong>
-                            </td>
-
-                            <td class="align-middle">
-                                <span class="badge bg-primary">
-                                    {{ materia.curso.nome }}
-                                </span>
-                            </td>
-
-                            <td class="align-middle">
-                                👨‍🏫 {{ materia.professor }}
-                            </td>
+{% endblock %}
 
                         </tr>
 

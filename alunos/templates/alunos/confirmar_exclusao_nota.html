@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmar Exclusão - Sistema de Alunos{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-5">
+            <div class="card shadow-lg border-danger">
+                <div class="card-header bg-danger">
+                    <h5 class="mb-0">⚠️ Confirmar Exclusão de Nota</h5>
+                </div>
+                <div class="card-body text-center">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #ef4444; margin: 1rem 0;"></i>
+                    
+                    <p class="fs-5 mt-3">Tem certeza que deseja excluir esta nota?</p>
+                    
+                    <div class="bg-light p-3 rounded mb-3">
+                        <p class="mb-1"><strong>Aluno:</strong> {{ nota.aluno.nome }}</p>
+                        <p class="mb-1"><strong>Matéria:</strong> {{ nota.materia.nome_materia }}</p>
+                        <p class="mb-0"><strong>Nota:</strong> <span class="badge bg-warning">{{ nota.valor }}</span></p>
+                    </div>
+
+                    <p class="text-muted">Esta ação não pode ser desfeita!</p>
+
+                    <form method="post" class="d-grid gap-2">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash"></i> Sim, Excluir
+                        </button>
+                        <a href="{% url 'lista_notas' %}" class="btn btn-secondary">
+                            Cancelar
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
