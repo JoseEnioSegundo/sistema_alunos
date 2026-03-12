@@ -2,15 +2,41 @@
 
 {% block content %}
 
-<h2>Confirmar Exclusão</h2>
+<div class="container mt-5">
 
-<p>Tem certeza que deseja excluir o aluno <strong>{{ aluno.nome }}</strong>?</p>
+    <div class="card shadow-lg border-0">
 
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Sim, excluir</button>
-</form>
+        <!-- Cabeçalho -->
+        <div class="card-header bg-danger text-white">
+            <h4 class="mb-0">⚠ Confirmar Exclusão</h4>
+        </div>
 
-<a href="{% url 'lista_alunos' %}">Cancelar</a>
+        <div class="card-body text-center">
+
+            <p class="fs-5">
+                Tem certeza que deseja excluir o aluno:
+            </p>
+
+            <h4 class="text-danger mb-4">
+                {{ aluno.nome }}
+            </h4>
+
+            <form method="post" class="d-flex justify-content-center gap-3">
+                {% csrf_token %}
+
+                <button type="submit" class="btn btn-danger px-4">
+                    🗑 Sim, excluir
+                </button>
+
+                <a href="{% url 'lista_alunos' %}" class="btn btn-secondary px-4">
+                    Cancelar
+                </a>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}
