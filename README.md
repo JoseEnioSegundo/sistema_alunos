@@ -1,33 +1,339 @@
 
-# Sistema de Gerenciamento de Alunos | Student Management System
+# 🎓 Sistema de Gerenciamento de Alunos
+
+Um sistema web completo e moderno para gerenciar alunos, cursos, matérias e notas. Construído com Django, Bootstrap 5 e com uma interface intuitiva e responsiva.
 
 ---
 
-## 📋 Table of Contents | Índice
+## ✨ Funcionalidades
 
-- [English](#-english) 🇺🇸
-- [Português](#-português) 🇧🇷
+### 📊 Dashboard
+- **Estatísticas em tempo real** - Total de alunos, matérias, cursos e notas
+- **Últimas notas lançadas** - Visualização das avaliações mais recentes
+- **Melhores desempenhos** - Ranking dos alunos com melhor média
+- **Navegação rápida** - Atalhos para as principais funcionalidades
+
+### 👥 Gerenciamento de Alunos
+- **Cadastro completo** - Nome, email, matrícula, curso, data de nascimento, telefone e endereço
+- **Edição de dados** - Atualizar informações de alunos existentes
+- **Perfil do aluno** - Visualizar informações completas, histórico de notas e desempenho
+- **Busca avançada** - Filtrar por nome, matrícula ou curso
+- **Paginação** - Navegação eficiente entre listas de alunos
+- **Desativação lógica** - Marcar alunos como inativos sem perder dados
+
+### 📚 Sistema de Notas
+- **Lançamento de notas** - Registrar avaliações com tipo e observações
+- **Edição de notas** - Atualizar avaliações já lançadas
+- **Exclusão de notas** - Remover registros com confirmação
+- **Filtros avançados** - Buscar por aluno, matéria, período e tipo de avaliação
+- **Tipos de avaliação** - Prova, Trabalho, Atividade, Exercício, Projeto
+
+### 📋 Boletim Acadêmico
+- **Visualização completa** - Ver todas as notas por matéria
+- **Cálculo automático** - Média por matéria e média geral
+- **Status do aluno** - Aprovado/Recuperação/Reprovado baseado nas notas
+- **Histórico de avaliações** - Registro completo de todas as provas
+
+### 🎓 Gerenciamento de Matérias
+- **Associar matérias** - Matricular alunos em disciplinas
+- **Desassociar matérias** - Remover alunos de disciplinas
+- **Informações detalhadas** - Ver professor, carga horária e curso
+- **Organização por curso** - Apenas matérias do curso do aluno
+
+### 🏫 Administração
+- **Django Admin customizado** - Painel com filtros e buscas avançadas
+- **Autenticação** - Sistema de login seguro (Django padrão)
+- **Permissões** - Controle de acesso baseado em grupos
+- **Auditoria** - Registro de alterações no sistema
 
 ---
 
-## 🇺🇸 English
+## 🛠️ Stack Tecnológico
 
-### Overview
+- **Backend**: Django 6.0+
+- **Banco de Dados**: SQLite (desenvolvimento)
+- **Frontend**: HTML5, Bootstrap 5.3, CSS3 customizado
+- **JavaScript**: Bootstrap JS, validações client-side
+- **Ambiente**: Python 3.x, virtualenv
 
-**Sistema de Gerenciamento de Alunos** is a comprehensive web-based student management system built with Django. This application provides a complete solution for managing students, courses, and subjects, including features for student enrollment, subject assignment, and administrative operations.
+---
 
-### ✨ Features
+## 📦 Instalação e Configuração
 
-- **Student Management**: Register, edit, view, and delete student records
-- **Enrollment Management**: Assign and manage subjects for each student
-- **Search Functionality**: Advanced search with filters by name, course, and enrollment number
-- **Pagination**: Efficient list navigation with page-based browsing
-- **Subject Management**: Manage subjects with professor assignments
-- **Course Management**: Organize students by courses
-- **Admin Dashboard**: Django admin panel for complete system administration
-- **Responsive Design**: Clean and professional user interface
+### Pré-requisitos
+- Python 3.8+
+- pip (gerenciador de pacotes Python)
+- virtualenv
 
-### 🛠️ Technology Stack
+### Passo 1: Clonar o repositório
+```bash
+git clone https://github.com/JoseEnioSegundo/sistema_alunos.git
+cd sistema_alunos
+```
+
+### Passo 2: Criar ambiente virtual
+```bash
+python -m venv venv
+# Windows
+venv\Scripts\activate
+# Linux/Mac
+source venv/bin/activate
+```
+
+### Passo 3: Instalar dependências
+```bash
+pip install django
+```
+
+### Passo 4: Executar migrações
+```bash
+python manage.py migrate
+```
+
+### Passo 5: Criar superusuário
+```bash
+python manage.py createsuperuser
+```
+
+### Passo 6: Popular base de dados com dados fictícios
+```bash
+python populate_db.py
+python populate_notas.py
+```
+
+### Passo 7: Iniciar servidor
+```bash
+python manage.py runserver
+```
+
+Acesse em: **http://localhost:8000**
+
+---
+
+## 📊 Dados Inclusos
+
+Após executar os scripts de população, o sistema terá:
+
+| Item | Quantidade |
+|------|-----------|
+| Cursos | 10 cursos variados |
+| Matérias | 40+ disciplinas |
+| Alunos | 48 alunos fictícios |
+| Notas | 200+ registros de avaliações |
+
+---
+
+## 🗂️ Estrutura de Pastas
+
+```
+sistema_alunos/
+├── alunos/                          # App Django principal
+│   ├── migrations/                  # Migrações do banco
+│   ├── templates/alunos/           # Templates HTML
+│   │   ├── lista_alunos.html
+│   │   ├── cadastrar_aluno.html
+│   │   ├── perfil_aluno.html
+│   │   ├── boletim_aluno.html
+│   │   ├── lista_notas.html
+│   │   ├── lancar_nota.html
+│   │   └── gerenciar_materias.html
+│   ├── admin.py                     # Configuração admin
+│   ├── models.py                    # Modelos de dados
+│   ├── views.py                     # Lógica das views
+│   ├── forms.py                     # Formulários
+│   ├── urls.py                      # Rotas
+│   └── tests.py                     # Testes
+├── config/                          # Configurações Django
+│   ├── settings.py
+│   ├── urls.py
+│   ├── wsgi.py
+│   └── asgi.py
+├── templates/                       # Templates globais
+│   ├── base.html                   # Template base
+│   └── dashboard.html              # Dashboard
+├── static/                          # Arquivos estáticos (CSS, JS)
+├── populate_db.py                   # Script de população
+├── populate_notas.py                # Script de notas
+├── manage.py                        # Gerenciador Django
+└── db.sqlite3                       # Banco de dados
+
+```
+
+---
+
+## 🚀 Uso do Sistema
+
+### Dashboard
+Página inicial com estatísticas e últimas atividades. Acesse em `/`
+
+### Listar Alunos
+Visualizar todos os alunos cadastrados com opções de edição, exclusão e gerenciamento.
+- URL: `/alunos/`
+
+### Cadastrar Aluno
+Adicionar um novo aluno ao sistema.
+- URL: `/alunos/cadastrar/`
+
+### Perfil do Aluno
+Ver informações completas, histórico de notas e desempenho.
+- URL: `/alunos/<id>/perfil/`
+
+### Boletim
+Visualizar todas as notas organizadas por matéria com cálculos de média.
+- URL: `/alunos/<id>/boletim/`
+
+### Gerenciar Notas
+Listar, lançar, editar e excluir notas.
+- URL: `/notas/`
+- Lançar: `/notas/lancar/`
+
+### Gerenciar Matérias
+Associar ou desassociar matérias de cada aluno.
+- URL: `/alunos/<id>/materias/`
+
+---
+
+## 🎨 Temas e Customização
+
+O sistema usa Bootstrap 5.3 com customizações CSS inclusas em `templates/base.html`.
+
+**Cores principais:**
+- Primária: #6366f1 (Indigo)
+- Secundária: #8b5cf6 (Purple)
+- Sucesso: #10b981 (Green)
+- Perigo: #ef4444 (Red)
+
+---
+
+## 📖 Endpoints da API
+
+| Método | Endpoint | Descrição |
+|--------|----------|-----------|
+| GET | `/` | Dashboard |
+| GET | `/alunos/` | Lista alunos |
+| POST | `/alunos/cadastrar/` | Criar aluno |
+| GET/POST | `/alunos/<id>/editar/` | Editar aluno |
+| POST | `/alunos/<id>/excluir/` | Excluir/Desativar aluno |
+| GET | `/alunos/<id>/perfil/` | Ver perfil |
+| GET | `/alunos/<id>/boletim/` | Ver boletim |
+| GET/POST | `/alunos/<id>/materias/` | Gerenciar matérias |
+| GET | `/notas/` | Lista notas |
+| POST | `/notas/lancar/` | Lançar nota |
+| GET/POST | `/notas/<id>/editar/` | Editar nota |
+| POST | `/notas/<id>/excluir/` | Excluir nota |
+| GET | `/materias/` | Lista matérias |
+
+---
+
+## 🔒 Segurança
+
+O sistema implementa:
+- CSRF protection em formulários
+- Validação de entrada
+- Paginação para limitar resultados
+- Senha hasheada (Django padrão)
+- Sessões seguras
+
+---
+
+## 🐛 Troubleshooting
+
+### Erro ao criar superusuário
+```bash
+python manage.py migrate
+python manage.py createsuperuser
+```
+
+### Sistema não inicia
+```bash
+python manage.py check
+python manage.py runserver --nothreading
+```
+
+### Dados não aparecem
+```bash
+python populate_db.py
+python populate_notas.py
+```
+
+---
+
+## 📝 Modelos de Dados
+
+### Curso
+- Nome (único)
+- Descrição
+- Status (ativo/inativo)
+
+### Matéria
+- Nome
+- Curso (FK)
+- Professor
+- Carga horária
+- Status (ativo/inativo)
+
+### Aluno
+- Nome
+- Email (único)
+- Matrícula (única)
+- Curso (FK)
+- Data de nascimento
+- Telefone
+- Endereço
+- Materias (M2M)
+- Status (ativo/inativo)
+
+### Nota
+- Aluno (FK)
+- Matéria (FK)
+- Valor (0-10)
+- Data de avaliação
+- Tipo (Prova, Trabalho, Atividade, Exercício, Projeto)
+- Observação
+
+---
+
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas! Siga as etapas:
+
+1. Fork o repositório
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+---
+
+## 📄 Licença
+
+Este projeto está licenciado sob a MIT License - veja o arquivo LICENSE para detalhes.
+
+---
+
+## 👨‍💻 Autor
+
+**José Enio**  
+GitHub: [@JoseEnioSegundo](https://github.com/JoseEnioSegundo)
+
+---
+
+## 🙏 Agradecimentos
+
+- Django Community
+- Bootstrap Team
+- Font Awesome icons
+
+---
+
+## 📞 Suporte
+
+Para questões ou problemas, abra uma issue no repositório GitHub.
+
+---
+
+**Última atualização:** 12 de março de 2026  
+**Versão:** 2.0.0 - Sistema Completo com Notas
 
 - **Backend**: Django 6.0.2
 - **Database**: SQLite3
