@@ -14,7 +14,7 @@
             {% for materia in materias %}
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card h-100 shadow-sm" style="transition: all 0.3s ease;">
-                    <div class="card-header" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);">
+                    <div class="card-header" style="background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%);">
                         <h5 class="mb-0 text-white">{{ materia.nome_materia }}</h5>
                     </div>
                     
@@ -64,17 +64,6 @@
 
 {% endblock %}
 
-                        </tr>
-
-                        {% empty %}
-
-                        <tr>
-                            <td colspan="4" class="text-center p-4">
-                                Nenhuma matéria cadastrada.
-                            </td>
-                        </tr>
-
-                        {% endfor %}
 
                     </tbody>
 
