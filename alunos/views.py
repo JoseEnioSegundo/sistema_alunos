@@ -137,10 +137,19 @@ def perfil_aluno(request, id):
     media_geral = Nota.objects.filter(aluno=aluno).aggregate(media=Avg('valor'))['media']
     
     # Agrupa notas por matéria
-    notas_por_materia = Nota.objects.filter(aluno=aluno).values('materia').annotate(
-        media=Avg('valor'),
-        total_avaliacoes=Count('id')
-    ).order_by('-media')
+    notas_por_materia = []
+    for materia in aluno.materias.all():
+        notas = Nota.objects.filter(aluno=aluno, materia=materia)
+        if notas.exists():
+            media = notas.aggregate(media=Avg('valor'))['media']
+            notas_por_materia.append({
+                'materia': materia,
+                'media': media,
+                'total_avaliacoes': notas.count()
+            })
+    
+    # Ordena por média (decrescente)
+    notas_por_materia = sorted(notas_por_materia, key=lambda x: x['media'] if x['media'] else 0, reverse=True)
     
     # Últimas notas do aluno
     ultimas_notas = Nota.objects.filter(aluno=aluno).order_by('-data_avaliacao')[:10]

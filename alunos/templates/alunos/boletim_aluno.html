@@ -19,7 +19,7 @@
                 </div>
                 <div class="text-end">
                     {% if media_geral %}
-                    <div style="font-size: 2.5rem; font-weight: 700;">
+                    <div class="media-geral-display">
                         {{ media_geral|floatformat:2 }}
                     </div>
                     <small>Média Geral</small>
@@ -37,7 +37,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <h5 class="mb-0"><i class="fas fa-book"></i> {{ item.materia.nome_materia }}</h5>
                     <div>
-                        <span class="badge fs-6" style="background-color: {% if item.media >= 7 %}#10b981{% elif item.media >= 5 %}#f59e0b{% else %}#ef4444{% endif %};">
+                        <span class="badge badge-grade fs-6 {% if item.media >= 7 %}badge-success{% elif item.media >= 5 %}badge-warning{% else %}badge-danger{% endif %}">
                             Média: {{ item.media|floatformat:2 }}
                         </span>
                         <span class="badge bg-info ms-2">{{ item.status }}</span>
@@ -61,7 +61,7 @@
                                 <td>{{ nota.data_avaliacao|date:"d/m/Y" }}</td>
                                 <td>{{ nota.get_tipo_avaliacao_display }}</td>
                                 <td class="text-center">
-                                    <span class="badge" style="background-color: {% if nota.valor >= 7 %}#10b981{% elif nota.valor >= 5 %}#f59e0b{% else %}#ef4444{% endif %};">
+                                    <span class="badge badge-grade {% if nota.valor >= 7 %}badge-success{% elif nota.valor >= 5 %}badge-warning{% else %}badge-danger{% endif %}">
                                         {{ nota.valor }}
                                     </span>
                                 </td>

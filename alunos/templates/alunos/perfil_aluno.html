@@ -140,7 +140,7 @@
                             <div class="list-group-item">
                                 <div class="d-flex justify-content-between">
                                     <span>{{ item.materia.nome_materia|truncatewords:3 }}</span>
-                                    <span class="badge" style="background-color: {% if item.media >= 7 %}#10b981{% elif item.media >= 5 %}#f59e0b{% else %}#ef4444{% endif %};">
+                                    <span class="badge badge-grade {% if item.media >= 7 %}badge-success{% elif item.media >= 5 %}badge-warning{% else %}badge-danger{% endif %}">
                                         {{ item.media|floatformat:2 }}
                                     </span>
                                 </div>
